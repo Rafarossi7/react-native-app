@@ -30,6 +30,10 @@ export const AuthProvider = ({ children }) => {
     setToken(null);
     setUser(null);
   };
+  const getUser = async () => {
+    const user = await AsyncStorage.getItem("user");
+    return user;
+  };
 
   return (
     <AuthContext.Provider value={{ token, user, login, logout }}>

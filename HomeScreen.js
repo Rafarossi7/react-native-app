@@ -12,7 +12,7 @@ import { AuthProvider } from "./AuthService";
 
 export default function HomeScreen({ navigation }) {
   const [menuSelecionado, setMenuSelecionado] = useState("atividades");
-  const { logout } = useContext(AuthProvider);
+  const { logout, user } = useContext(AuthProvider);
 
   const atividades = [
     { id: "1", titulo: "Atividade " },
@@ -56,7 +56,9 @@ export default function HomeScreen({ navigation }) {
         ))}
       </View>
 
-      <Text style={styles.title}>Bem-vindo ao Aprender Unilago 🎓</Text>
+      <Text style={styles.title}>
+        Bem-vindo {user.Nome} ao Aprender Unilago 🎓
+      </Text>
       <Text style={styles.subtitle}>Seu Painel de Atividades:</Text>
 
       {menuSelecionado === "atividades" && (
