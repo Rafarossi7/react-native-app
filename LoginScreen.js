@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { AuthContext, loginUser } from "./AuthService";
 import { useNavigation } from "@react-navigation/native";
+import { showToast } from "./Toast";
 
 export default function LoginScreen({ isLogin }) {
   const [email, setEmail] = useState("");
@@ -17,9 +18,10 @@ export default function LoginScreen({ isLogin }) {
   const navigation = useNavigation();
   const handleLogin = async () => {
     try {
-      const { token, data } = await loginUser(email, senha);
-      if (token && data) {
-        login(token, data);
+      const { token, user } = await loginUser(email, senha);
+      if (token && user) {
+        login(token, user);
+        showToast("Usuário logado com sucesso!");
         navigation.reset({
           index: 0,
           routes: [{ name: "Home" }],
@@ -29,6 +31,9 @@ export default function LoginScreen({ isLogin }) {
       alert("Erro no login:", error);
     }
   };
+  // useEffect(() => {
+  //   showToast("Toast funcinando");
+  // }, []);
 
   return (
     <View style={styles.container}>

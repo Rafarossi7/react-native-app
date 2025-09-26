@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { AuthContext, CadastroUser } from "./AuthService";
 import { useNavigation } from "@react-navigation/native";
+import { showToast } from "./Toast";
 
 export default function CadastroScreen({ isLogin }) {
   const [nome, setNome] = useState("");
@@ -19,9 +20,10 @@ export default function CadastroScreen({ isLogin }) {
   const navigation = useNavigation();
 
   const handleCadastro = async () => {
-    const { token, data } = CadastroUser(nome, email, senha, confirmarSenha);
-    if (token && data) {
-      login(token, data);
+    const { token, user } = CadastroUser(nome, email, senha, confirmarSenha);
+    if (token && user) {
+      login(token, user);
+      showToast("Usuário cadastrado com sucesso!");
       navigation.reset({
         index: 0,
         routes: [{ name: "Home" }],
