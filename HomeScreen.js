@@ -1,54 +1,53 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from "react";
 import {
-  View, Text, StyleSheet, Image, Pressable,
-  Alert, FlatList
-} from 'react-native';
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Pressable,
+  Alert,
+  FlatList,
+} from "react-native";
+import { AuthProvider } from "./AuthService";
 
 export default function HomeScreen({ navigation }) {
-  const [menuSelecionado, setMenuSelecionado] = useState('atividades');
+  const [menuSelecionado, setMenuSelecionado] = useState("atividades");
+  const { logout } = useContext(AuthProvider);
 
   const atividades = [
-    { id: '1', titulo: 'Atividade ' },
-    { id: '2', titulo: 'Trabalho ' },
-    { id: '3', titulo: 'Trabalho ' },
-    { id: '4', titulo: 'Trabalho ' },
+    { id: "1", titulo: "Atividade " },
+    { id: "2", titulo: "Trabalho " },
+    { id: "3", titulo: "Trabalho " },
+    { id: "4", titulo: "Trabalho " },
   ];
 
   const handleLogout = () => {
-    Alert.alert(
-      "Sair",
-      "Deseja realmente sair?",
-      [
-        { text: "Cancelar", style: "cancel" },
-        {
-          text: "Sair", onPress: () =>
-            navigation.reset({
-              index: 0,
-              routes: [{ name: 'Login' }],
-            })
-        }
-      ]
-    );
+    Alert.alert("Sair", "Deseja realmente sair?", [
+      { text: "Cancelar", style: "cancel" },
+      {
+        text: "Sair",
+        onPress: () => logout(),
+      },
+    ]);
   };
 
   return (
     <View style={styles.container}>
-
       {/* Menu Box */}
       <View style={styles.menuBox}>
-        {['atividades', 'notas', 'mensagens'].map((item) => (
+        {["atividades", "notas", "mensagens"].map((item) => (
           <Pressable
             key={item}
             style={[
               styles.menuButton,
-              menuSelecionado === item && styles.menuButtonSelected
+              menuSelecionado === item && styles.menuButtonSelected,
             ]}
             onPress={() => setMenuSelecionado(item)}
           >
             <Text
               style={[
                 styles.menuButtonText,
-                menuSelecionado === item && styles.menuButtonTextSelected
+                menuSelecionado === item && styles.menuButtonTextSelected,
               ]}
             >
               {item.charAt(0).toUpperCase() + item.slice(1)}
@@ -60,8 +59,7 @@ export default function HomeScreen({ navigation }) {
       <Text style={styles.title}>Bem-vindo ao Aprender Unilago 🎓</Text>
       <Text style={styles.subtitle}>Seu Painel de Atividades:</Text>
 
-      
-      {menuSelecionado === 'atividades' && (
+      {menuSelecionado === "atividades" && (
         <FlatList
           data={atividades}
           keyExtractor={(item) => item.id}
@@ -91,21 +89,21 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     borderWidth: 5,
-    borderColor: '#4682B4',
+    borderColor: "#4682B4",
     borderRadius: 15,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   menuBox: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    justifyContent: "space-around",
     paddingVertical: 12,
     paddingHorizontal: 10,
     marginBottom: 20,
     borderWidth: 2,
-    borderColor: '#4682B4',
+    borderColor: "#4682B4",
     borderRadius: 15,
-    backgroundColor: '#e6f0fa',
-    shadowColor: '#4682B4',
+    backgroundColor: "#e6f0fa",
+    shadowColor: "#4682B4",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 6,
@@ -115,29 +113,29 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 12,
     borderRadius: 10,
-    backgroundColor: '#d0d7ee',
+    backgroundColor: "#d0d7ee",
   },
   menuButtonSelected: {
-    backgroundColor: '#4682B4',
+    backgroundColor: "#4682B4",
   },
   menuButtonText: {
-    color: '#333',
-    fontWeight: 'bold',
+    color: "#333",
+    fontWeight: "bold",
   },
   menuButtonTextSelected: {
-    color: '#fff',
+    color: "#fff",
   },
-  
+
   title: {
     fontSize: 16,
-    color: '#4682B4',
-    textAlign: 'center',
-    fontWeight: 'bold',
+    color: "#4682B4",
+    textAlign: "center",
+    fontWeight: "bold",
   },
   subtitle: {
     fontSize: 15,
-    color: '#666',
-    textAlign: 'center',
+    color: "#666",
+    textAlign: "center",
     marginBottom: 15,
   },
   list: {
@@ -145,25 +143,25 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   atividadeItem: {
-    backgroundColor: '#e6f0fa',
+    backgroundColor: "#e6f0fa",
     padding: 10,
     marginBottom: 10,
     borderRadius: 8,
     borderLeftWidth: 4,
-    borderLeftColor: '#4682B4',
+    borderLeftColor: "#4682B4",
   },
   atividadeTexto: {
-    color: '#333',
+    color: "#333",
   },
   button: {
-    backgroundColor: '#4682B4',
+    backgroundColor: "#4682B4",
     padding: 10,
     borderRadius: 10,
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 10,
   },
   buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
+    color: "#fff",
+    fontWeight: "bold",
   },
 });
